@@ -10,7 +10,7 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    const url = "http://backendexample.sanbercloud.com/api/movies";
+    const url = `http://backendexample.sanbercloud.com/api/movies`;
     axios
       .get(url)
       .then((res) => {
@@ -33,7 +33,7 @@ class Home extends React.Component {
               <div key={film.id}>
                 <h3>{film.title}</h3>
                 <br />
-                <img id="image" src='../' width='500px'></img>
+                <p>{film.image_url}</p>
                 <p>
                   <b> Rating {film.rating}</b>
                 </p>

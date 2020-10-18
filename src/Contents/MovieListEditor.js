@@ -12,6 +12,7 @@ const MovieListEditor = () => {
     duration: "",
     genre: "",
     rating: "",
+    image_url: "",
   });
   const [editMode, setEditMode] = useState(false);
   const [error, setError] = useState(false);
@@ -73,9 +74,9 @@ const MovieListEditor = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const url = `http://backendexample.sanbercloud.com/api/movies`;
-    const { title, description, year, duration, genre, rating } = input;
+    const { title, description, year, duration, genre, rating, image_url } = input;
 
-    if (title && description && year && duration && genre && rating) {
+    if (title && description && year && duration && genre && rating && image_url) {
       axios
         .post(url, input)
         .then((res) => {
@@ -87,6 +88,7 @@ const MovieListEditor = () => {
             duration: "",
             genre: "",
             rating: "",
+            image_url: "",
           });
           setError(false);
         })
@@ -110,6 +112,7 @@ const MovieListEditor = () => {
       duration: data[0].duration,
       genre: data[0].genre,
       rating: data[0].rating,
+      image_url: data[0].image_url,
     });
     setMovieId(data[0].id);
     setEditMode(true);
@@ -119,9 +122,9 @@ const MovieListEditor = () => {
   const handleEdit = (event) => {
     event.preventDefault();
     const url = `http://backendexample.sanbercloud.com/api/movies/${movieId}`;
-    const { title, description, year, duration, genre, rating } = input;
+    const { title, description, year, duration, genre, rating, image_url } = input;
 
-    if (title && description && year && duration && genre && rating) {
+    if (title && description && year && duration && genre && rating && image_url) {
       axios
         .put(url, input)
         .then((res) => {
@@ -133,6 +136,7 @@ const MovieListEditor = () => {
             duration: "",
             genre: "",
             rating: "",
+            image_url: "",
           });
           setMovieId("");
           setEditMode(false);
@@ -160,6 +164,7 @@ const MovieListEditor = () => {
           duration: "",
           genre: "",
           rating: "",
+          image_url: "",
         });
         setMovieId("");
         setEditMode(false);
@@ -178,6 +183,7 @@ const MovieListEditor = () => {
       duration: "",
       genre: "",
       rating: "",
+      image: "",
     });
     setMovieId("");
     setEditMode(false);
@@ -318,6 +324,28 @@ const MovieListEditor = () => {
                     fontWeight: "bold",
                     fontSize: 16,
                   }}
+                  >
+                  Image
+                </div>
+                :{" "}
+                <input
+                  style={{ display: "block", marginTop:"-1.5em",marginLeft:"14em" }}
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  value={input.image_url}
+                  onChange={handleChange}
+                  placeholder="image"
+                />
+              </div>
+              <div style={{ display: "inline", marginBottom: "1em" }}>
+                <div
+                  style={{
+                    display: "inline-block",
+                    width: 180,
+                    fontWeight: "bold",
+                    fontSize: 16,
+                  }}
                 >
                   Rating (1-10)
                 </div>
@@ -382,6 +410,7 @@ const MovieListEditor = () => {
               <th>Duration</th>
               <th>Genre</th>
               <th>Rating</th>
+              <th>Image</th>
               <th colSpan="2">Actions</th>
             </tr>
           </thead>
@@ -396,6 +425,7 @@ const MovieListEditor = () => {
                   <td>{parseFloat(data.duration / 60).toFixed(2)} jam</td>
                   <td>{data.genre}</td>
                   <td>{data.rating}</td>
+                  <td>{data.image_url}</td>
                   <td style={{ textAlign: "center", width: "100px" }}>
                     <button
                       className="btn-edit"
